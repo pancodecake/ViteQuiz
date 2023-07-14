@@ -1,6 +1,9 @@
 import { useState } from 'react'
-import Sidebar from './components/Sidebar'
+import Thirth from './components/Checked'
+import Second from './components/Questions'
+import Intro from './components/Intro'
 import './scss/main.scss'
+
 
 function App() {
   return (

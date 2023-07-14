@@ -1,6 +1,6 @@
 import React from "react"
 import { useState,useEffect } from "react";
-export default function Sidebar(props) {
+export default function Thirth(props) {
     return (
         <>
         </>
