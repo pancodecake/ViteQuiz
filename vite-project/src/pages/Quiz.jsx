@@ -5,7 +5,7 @@ import Question from "../components/Question";
 
 export default function Quiz() {
   const [questions, setQuestion] = useState('');
-  const [answersID, setAnswer] = useState('');
+  const [currentAnswer, setCurrentAnswer] = useState('');
   const [questionsData, setQuestionData] = useState();
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=5")
@@ -28,9 +28,18 @@ export default function Quiz() {
   function checkAnswers(){
      
   }
+  function answerClicked(e){
+    e.target.classList.toggle('choosen')
+    const otherBtns = e.target.closest('.qustion-btns').querySelectorAll('.question-btn')
+  for(let btn of otherBtns){
+    if(btn !== e.target){
+      btn.classList.remove('choosen')
+    }
+  }
+  }
    const questionsDOM = questions.length !== 0 && questions.map((e) => {
-
-     return <Question id={uniqid}  question={decode(e.question, { level: "html5" })} answers={e.answers.map(a => decode(a, { level: "html5" }))} />;
+   
+     return <Question key={uniqid()} answerClicked={answerClicked}  currentAnswer={currentAnswer} setCurrentAnswer={setCurrentAnswer} id={uniqid}  question={decode(e.question, { level: "html5" })} answers={e.answers.map(a => decode(a, { level: "html5" }))} />;
    });
   return (
     <main>
