@@ -1,3 +1,10 @@
+@font-face {
+    font-family: "KarlaBold";
+    src: local("Karla-Bold"),
+      url("Karla-Bold.ttf") format("ttf");
+    font-weight: bold;
+    font-display: swap;
+  }
 .quiz-con{
     display: flex;
     flex-direction: column;
@@ -12,6 +19,7 @@
 }
 .question{
     &-title{
+        font-family: 'KarlaBold';
     color: $text;
 font-size: 16px;
 font-weight: 700;
