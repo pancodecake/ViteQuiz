@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 export default function Question(props) {
- 
+
 function btnName(status,marked){
 
   let originName = 'question-btn'
@@ -18,19 +18,25 @@ function btnName(status,marked){
 
 const btns = props.questions.answers.map(btn => {
 
-  return (
+  const checkingStyles = {
+    backgroundColor:btn.choosen ? btn.answer === props.questions.correct_answer ? '#94D7A2' : '#F8BCBC' :'transparent' ,
+    opacity:!btn.choosen && '50%',
+    border:btn.choosen &&  'none'
+   }
 
-    <div id={btn.id} className={btnName()}>
+  return (
+  
+    <div  key={btn.id} style={props.checking && checkingStyles} id={btn.id} className={btnName(btn.choosen)}>
       <input 
       className={btnName()}
       type="radio"
       id={btn.answer}
       name={props.index}
       value={btn.answer}
-      key={btn.id}
+     
       checked={btn.choosen}
-      choosen={btn.choosen + ''}
-      onChange={(event) => props.answerClicked(event)}/>
+      correctanswer={(btn.answer === props.questions.correct_answer).toString()}
+      onChange={(event) => props.checking ? null : props.answerClicked(event)}/>
  
   <label htmlFor={btn.answer}>{btn.answer}</label>
   </div>
