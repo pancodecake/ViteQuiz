@@ -6,10 +6,7 @@ function btnName(status,marked){
 
   let originName = 'question-btn'
  
-  status === true && console.log(props.index)
-
-
-    switch (status) {
+      switch (status) {
       case true:
         return originName += ' choosen'
       case false:
@@ -18,20 +15,32 @@ function btnName(status,marked){
   
   return 'question-btn'
 }
-const arr = []
+
 const btns = props.questions.answers.map(btn => {
-  arr.push(btn.choosen)
-  console.log(arr)
+
   return (
-    <button parentquestion={props.index} onClick={(event) => props.answerClicked(event)} className={btnName(btn.choosen)} key={btn.id} id={btn.id} >
-      {btn.answer}
-    </button>
+
+    <div id={btn.id} className={btnName()}>
+      <input 
+      className={btnName()}
+      type="radio"
+      id={btn.answer}
+      name={props.index}
+      value={btn.answer}
+      key={btn.id}
+      checked={btn.choosen}
+      choosen={btn.choosen + ''}
+      onChange={(event) => props.answerClicked(event)}/>
+ 
+  <label htmlFor={btn.answer}>{btn.answer}</label>
+  </div>
+
   )
 })
 
 
   return (
-    <div parentquestion={props.index}   className="question">
+    <div parentquestion={props.index} className="question">
       <p className="question-title">{props.questions.question}</p>
       <div className="qustion-btns">{btns}</div>
     </div>

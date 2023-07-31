@@ -11,18 +11,18 @@ export default function Quiz() {
       .then((res) => res.json())
       .then((data) =>
         setQuestions(
-          data.results.map((item,i) => {
+          data.results.map((item, i) => {
             return {
               ...item,
               question: decode(item.question, { level: "html5" }),
-              questionId:i,
+              questionId: i,
               answers: [item.correct_answer, ...item.incorrect_answers].map(
                 (e) => {
                   return {
-                    questionId:i,
+                    questionId: i,
                     answer: decode(e, { level: "html5" }),
                     id: uniqid(),
-                    choosen: false,
+                    choosen: "",
                   };
                 }
               ),
@@ -32,38 +32,30 @@ export default function Quiz() {
       );
   }, []);
   // question && console.log(...question.map(e => e))
-  // console.log(questions)
 
-  const qestionDOM = questions?.map((question, i) => {
-    // const [id,choosen,answer] = e.answers.map(answer => {})
-    function answerClicked(event) {
-      setQuestions((oldVal) => {
-        return oldVal.map((item) => {
-          // console.log(item.answers.filter(e => e.questionId === parseFloat(event.target.attributes.parentquestion.value)))
-          let res = item.answers.map((e) => {
-
-            // if( e.questionId === parseFloat(event.target.attributes.parentquestion.value)){
-            //   if(e.choosen === true && e.choosen !== false ){
-            //     console.log('pog',e.choosen)
-            //    return e
-            //   }else{
-            //     console.log('nope',e.choosen)
-            //     return  e.id === event.target.id ? {...e,choosen:!e.choosen} : e
-            //   }
-
-            // }else{
-            //   return e
-            // }
-            // return e.questionId === parseFloat(event.target.attributes.parentquestion.value) ?    : e
-             return e.id === event.target.id ? {...e,choosen:!e.choosen} : e 
-          })
-
-          
-          
-          return { ...item, answers: res };
+  function answerClicked(event) {
+    setQuestions((oldVal) => {
+      return oldVal.map((item) => {
+        let res = item.answers.map((e) => {
+          if (
+            e.questionId === parseFloat(
+              event.target.closest(".question").attributes.parentquestion.value
+            )
+          ) {
+            if (e.id === event.target.parentElement.id) {
+              return { ...e, choosen: !e.choosen };
+            } else {
+              return { ...e, choosen: false };
+            }
+          } else {
+            return e;
+          }
         });
+        return { ...item, answers: res };
       });
-    }
+    });
+  }
+  const qestionDOM = questions?.map((question, i) => {
     return (
       <Question
         answerClicked={answerClicked}
@@ -80,3 +72,17 @@ export default function Quiz() {
     </div>
   );
 }
+// return oldVal.map((item) => {
+
+//   let res = item.answers.map((e) => {
+//     if( e.id === event.target.id){
+
+//       return { ...e, choosen: !e.choosen }
+//     }else{
+//       return e
+//     }
+
+//   });
+
+//   return { ...item, answers: res };
+// });
